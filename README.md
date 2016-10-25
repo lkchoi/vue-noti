@@ -1,6 +1,6 @@
-# noti
+# vue-noti
 
-> A Vue.js project
+  Notifications Demo (Vue.js 2.0 + Bulma)
 
 ## Build Setup
 
