@@ -1,18 +1,14 @@
 <template lang="pug">
   #app
-    img#logo(src='./assets/logo.png')
+    router-link(to="/")
+      img#logo(src='./assets/logo.png')
     .columns
       .column.is-one-third.is-offset-one-third
-        login
-    .columns
-      .column.is-one-third.is-offset-one-third
-        demo
+        router-view
 </template>
 
 <script>
 import Vue from 'vue'
-import Login from './components/Login.vue'
-import Demo from './components/Demo.vue'
 import EventHub from './EventHub'
 import Notification from 'vue-bulma-notification'
 const NotificationComponent = Vue.extend(Notification)
@@ -32,11 +28,6 @@ const openNotification = (propsData = {
 
 export default {
   name: 'app',
-
-  components: {
-    Login,
-    Demo
-  },
 
   created () {
     EventHub.$on('notify', this.notify)

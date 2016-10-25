@@ -14,7 +14,7 @@
           v-model="user.password")
         i.fa.fa-lock
       .control
-        button.button.is-primary Login
+        button.button.is-primary.is-pulled-right Login
 </template>
 
 <script>
