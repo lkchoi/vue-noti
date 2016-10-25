@@ -3,6 +3,9 @@
     img#logo(src='./assets/logo.png')
     .columns
       .column.is-half.is-offset-one-quarter
+        login
+    //- .columns
+      .column.is-half.is-offset-one-quarter
         form(@submit.prevent="notify")
           .control
             input.input(
@@ -24,6 +27,7 @@
 
 <script>
 import Vue from 'vue'
+import Login from './components/Login.vue'
 import Notification from 'vue-bulma-notification'
 const NotificationComponent = Vue.extend(Notification)
 const openNotification = (propsData = {
@@ -44,7 +48,7 @@ export default {
   name: 'app',
 
   components: {
-    Notification
+    Login
   },
 
   data () {
