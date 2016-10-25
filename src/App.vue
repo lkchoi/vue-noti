@@ -2,32 +2,18 @@
   #app
     img#logo(src='./assets/logo.png')
     .columns
-      .column.is-half.is-offset-one-quarter
+      .column.is-one-third.is-offset-one-third
         login
-    //- .columns
-      .column.is-half.is-offset-one-quarter
-        form(@submit.prevent="notify")
-          .control
-            input.input(
-              placeholder="Title"
-              v-model="noti.title"
-            )
-          .control
-            textarea.textarea(
-              placeholder="Message"
-              v-model="noti.message"
-            )
-          .control
-            label.radio(v-for="type in types")
-              input(type="radio", :value="type", v-model="noti.type")
-              span &nbsp;{{ type }}
-          .control
-            button.button.is-primary.is-pulled-right Notify!
+    .columns
+      .column.is-one-third.is-offset-one-third
+        demo
 </template>
 
 <script>
 import Vue from 'vue'
 import Login from './components/Login.vue'
+import Demo from './components/Demo.vue'
+import EventHub from './EventHub'
 import Notification from 'vue-bulma-notification'
 const NotificationComponent = Vue.extend(Notification)
 const openNotification = (propsData = {
@@ -48,51 +34,29 @@ export default {
   name: 'app',
 
   components: {
-    Login
+    Login,
+    Demo
   },
 
-  data () {
-    return {
-      types: [
-        'primary',
-        'info',
-        'warning',
-        'danger'
-      ],
-      noti: {
-        type: 'info',
-        title: 'Sample Title',
-        message: `As electronic devices become more compact and powerful, conventional methods for manufacturing electrical components simply won’t do. The problem lies in the fact that current systems require a huge battery and their components are too bulky.`
-      }
-    }
+  created () {
+    EventHub.$on('notify', this.notify)
   },
 
   methods: {
-    notify () {
+    notify ({ title, message, type, duration, direction }) {
+      duration = duration || this.duration(message)
+      direction = direction || 'Down'
       openNotification({
-        title: this.noti.title,
-        message: this.noti.message,
-        type: this.noti.type,
-        duration: this.duration(this.noti.message),
-        direction: 'Down'
+        title,
+        message,
+        type,
+        duration,
+        direction
       })
     },
 
-    /**
-     * Calculate notification duration based on message length
-     * @return {} [description]
-     */
     duration (message) {
       return 32 * message.length + 3000
-    }
-  },
-
-  events: {
-    notify (message, title = '', type = 'info', duration = null, direction = 'Down') {
-      if (duration === null) {
-        duration = this.duration(message)
-      }
-      openNotification({title, message, type, duration, direction})
     }
   }
 }
